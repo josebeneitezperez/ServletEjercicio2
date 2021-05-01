@@ -1,16 +1,13 @@
 package main.java.clasesVO;
-// default package
-// Generated 29-abr-2021 16:46:27 by Hibernate Tools 5.2.12.Final
 
-import java.util.HashSet;
-import java.util.Set;
-import javax.persistence.Column;
+// default package
+// Generated 30-abr-2021 16:36:25 by Hibernate Tools 5.2.12.Final
+
+import javax.persistence.Column; 
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import static javax.persistence.GenerationType.IDENTITY;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
 /**
@@ -20,27 +17,25 @@ import javax.persistence.Table;
 @Table(name = "roles", catalog = "tienda_online")
 public class Roles implements java.io.Serializable {
 
-	private Integer id;
+	private int id;
 	private String rol;
-	private Set<Usuarios> usuarios = new HashSet<Usuarios>(0);
 
 	public Roles() {
 	}
 
-	public Roles(String rol, Set<Usuarios> usuarios) {
+	public Roles(String rol) {
 		this.rol = rol;
-		this.usuarios = usuarios;
 	}
 
 	@Id
 	@GeneratedValue(strategy = IDENTITY)
 
 	@Column(name = "id", unique = true, nullable = false)
-	public Integer getId() {
+	public int getId() {
 		return this.id;
 	}
 
-	public void setId(Integer id) {
+	public void setId(int id) {
 		this.id = id;
 	}
 
@@ -51,15 +46,6 @@ public class Roles implements java.io.Serializable {
 
 	public void setRol(String rol) {
 		this.rol = rol;
-	}
-
-	@OneToMany(fetch = FetchType.LAZY, mappedBy = "roles")
-	public Set<Usuarios> getUsuarios() {
-		return this.usuarios;
-	}
-
-	public void setUsuarios(Set<Usuarios> usuarios) {
-		this.usuarios = usuarios;
 	}
 
 }

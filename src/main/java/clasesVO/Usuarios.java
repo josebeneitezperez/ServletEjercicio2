@@ -1,15 +1,13 @@
 package main.java.clasesVO;
-// default package 
-// Generated 29-abr-2021 16:46:27 by Hibernate Tools 5.2.12.Final
 
-import javax.persistence.Column; 
+// default package
+// Generated 30-abr-2021 16:36:25 by Hibernate Tools 5.2.12.Final
+
+import javax.persistence.Column;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import static javax.persistence.GenerationType.IDENTITY;
 import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 /**
@@ -19,8 +17,8 @@ import javax.persistence.Table;
 @Table(name = "usuarios", catalog = "tienda_online")
 public class Usuarios implements java.io.Serializable {
 
-	private Integer id;
-	private Roles roles;
+	private int id;
+	private int idRol;
 	private String email;
 	private String clave;
 	private String nombre;
@@ -35,9 +33,9 @@ public class Usuarios implements java.io.Serializable {
 	public Usuarios() {
 	}
 
-	public Usuarios(Roles roles, String email, String clave, String nombre, String apellido1, String apellido2,
+	public Usuarios(int idRol, String email, String clave, String nombre, String apellido1, String apellido2,
 			String direccion, String localidad, String provincia, String telefono, String dni) {
-		this.roles = roles;
+		this.idRol = idRol;
 		this.email = email;
 		this.clave = clave;
 		this.nombre = nombre;
@@ -54,22 +52,21 @@ public class Usuarios implements java.io.Serializable {
 	@GeneratedValue(strategy = IDENTITY)
 
 	@Column(name = "id", unique = true, nullable = false)
-	public Integer getId() {
+	public int getId() {
 		return this.id;
 	}
 
-	public void setId(Integer id) {
+	public void setId(int id) {
 		this.id = id;
 	}
 
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "id_rol")
-	public Roles getRoles() {
-		return this.roles;
+	@Column(name = "id_rol")
+	public int getIdRol() {
+		return this.idRol;
 	}
 
-	public void setRoles(Roles roles) {
-		this.roles = roles;
+	public void setIdRol(int idRol) {
+		this.idRol = idRol;
 	}
 
 	@Column(name = "email")

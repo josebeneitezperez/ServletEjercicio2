@@ -1,9 +1,7 @@
 package main.java.servlet;
 
-import java.io.IOException;
+import java.io.IOException; 
 import java.io.PrintWriter;
-import java.util.List;
-import java.util.Map;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
@@ -30,9 +28,6 @@ public class Login extends HttpServlet {
 	private static final long serialVersionUID = 1L;
 
 	private static Logger logger = LogManager.getLogger(Login.class);
-
-	// private static String rutaLogs = "C:\\Users\\Formacion\\workspace
-	// Jose\\EjercicioServlet2\\resources\\log4j.properties";
 	private static String rutaLogs = "C:\\Users\\josec\\workspace CursoJava\\EjercicioServlet2\\resources\\log4j.properties";
 
 	private static SessionFactory sessionFactory = null;
@@ -49,11 +44,11 @@ public class Login extends HttpServlet {
 	/**
 	 * @see Servlet#init(ServletConfig)
 	 */
-	public void init(ServletConfig config) throws ServletException {
+	public void init(ServletConfig config) throws ServletException {	
 		abrirSesion();
 	}
 
-	public static Session abrirSesion() {
+	public static Session abrirSesion() {	
 		if (sessionFactory == null) {
 			sessionFactory = HibernateUtil.getSessionFactory();
 		}
@@ -77,17 +72,17 @@ public class Login extends HttpServlet {
 		String contraseña = null;
 		if (((nombre = request.getParameter("user")) != null)
 				&& ((contraseña = request.getParameter("password")) != null)) {
-
-			System.out.println("Usuario introducido: " + nombre + ". Y contraseña introducida: " + contraseña);
-
+			
 			Usuarios usuario = ControladorUsuarios.getEmpleados(nombre);
-
+			
 			if (usuario != null && usuario.getClave().equalsIgnoreCase(contraseña)) { // si no existe el usuario en la
 																						// BD, no comprueba la clave
-				printResponse(out, "Bienvenido " + nombre);
-
+				logger.info("Login correcto");
+				request.getRequestDispatcher("menuPrincipal.html").forward(request, response);
 			} else {
-				printResponse(out, "No puede acceder a la aplicación");
+				
+				logger.info("Login inválido");
+				request.getRequestDispatcher("loginInvalido.html").forward(request, response);
 			}
 
 			/*
@@ -105,8 +100,8 @@ public class Login extends HttpServlet {
 			 */
 
 		} else {
-
-			printResponse(out, "No puede acceder a la aplicación");
+			logger.info("Login inválido");
+			request.getRequestDispatcher("loginInvalido.html").forward(request, response);
 		}
 
 		out.close();
@@ -121,21 +116,5 @@ public class Login extends HttpServlet {
 
 		logger.info("Recibida petición POST");
 		doGet(request, response);
-	}
-
-	private PrintWriter printResponse(PrintWriter out, String mensaje) {
-
-		PrintWriter res = out;
-
-		res.println("<html>");
-		res.println("<title>Login</title>");
-		res.println("<body>");
-
-		res.println(mensaje);
-
-		res.println("</body>");
-		res.println("</html>");
-
-		return res;
 	}
 }

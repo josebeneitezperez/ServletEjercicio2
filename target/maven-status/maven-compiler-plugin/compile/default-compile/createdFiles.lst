@@ -1,1 +1,10 @@
+main\java\servlet\AltaRol.class
+main\java\controlador\ControladorUsuarios.class
+main\java\clasesVO\Usuarios.class
+main\java\servlet\AltaUsuario.class
+main\java\clasesDAO\UsuariosDAO.class
+main\java\servlet\Redireccionar.class
+main\java\clasesVO\Roles.class
+main\java\clasesDAO\RolesDAO.class
+main\java\controlador\HibernateUtil.class
 main\java\servlet\Login.class

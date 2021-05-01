@@ -1,14 +1,14 @@
 package main.java.clasesDAO;
 
 
-import org.apache.log4j.LogManager;
+import org.apache.log4j.LogManager; 
 import org.apache.log4j.Logger;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
+import org.hibernate.Transaction;
 
 import main.java.clasesVO.Usuarios;
 import main.java.servlet.Login;
-
 
 public class UsuariosDAO {
 
@@ -16,8 +16,6 @@ public class UsuariosDAO {
 	private static Session sesion = null;
 
 	public static Usuarios getUsuario(String nombre) {
-		
-		//una consulta no necesita Transaction para nada
 		
 		sesion = Login.abrirSesion();
 		Usuarios usuario = null;
@@ -38,5 +36,24 @@ public class UsuariosDAO {
 		}
 		
 		return usuario;
+	}
+	
+	public static void insert(Usuarios usuario) {
+
+		sesion = Login.abrirSesion();
+		Transaction tx = sesion.beginTransaction();
+		
+		try {
+			sesion.save(usuario);
+			tx.commit();
+		} catch (Exception e) {
+			logger.error("No se pudo insertar el usuario : " + usuario.getNombre() + ", error: ", e);
+		} finally {
+			try {
+				sesion.close();
+			} catch (HibernateException e) {
+				logger.error("No se pudo cerrar la conexión con la BD, error: ", e);
+			}
+		}
 	}
 }
