@@ -1,5 +1,7 @@
 package main.java.clasesDAO;
 
+import java.util.List; 
+
 import org.apache.log4j.LogManager; 
 import org.apache.log4j.Logger;
 import org.hibernate.HibernateException;
@@ -14,6 +16,27 @@ public class RolesDAO {
 	private static Logger logger = LogManager.getLogger(UsuariosDAO.class);
 	private static Session sesion = null;
 
+	public static List<Roles> getListaRoles() {
+		sesion = Login.abrirSesion();
+		Transaction tx = sesion.beginTransaction();
+
+		List<Roles> lista = null;
+		String query = "from Roles order by id";
+		try {
+			lista = sesion.createQuery(query).list();
+			tx.commit();
+		} catch (Exception e) {
+			logger.error("Error al ejecutar la Query " + query + ", error: ", e);
+		} finally {
+			try {
+				sesion.close();
+			} catch (HibernateException e) {
+				logger.error("No se pudo cerrar la conexión con la BD, error: ", e);
+			}
+		}
+		return lista;
+	}
+	
 	public static Roles getRol(String nombreRol) {
 		
 		sesion = Login.abrirSesion();

@@ -2,6 +2,8 @@ package main.java.servlet;
 
 import java.io.IOException; 
 import java.io.PrintWriter;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
@@ -9,6 +11,7 @@ import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
@@ -45,7 +48,7 @@ public class Login extends HttpServlet {
 	 * @see Servlet#init(ServletConfig)
 	 */
 	public void init(ServletConfig config) throws ServletException {	
-		abrirSesion();
+		sessionFactory = HibernateUtil.getSessionFactory();
 	}
 
 	public static Session abrirSesion() {	
@@ -77,8 +80,22 @@ public class Login extends HttpServlet {
 			
 			if (usuario != null && usuario.getClave().equalsIgnoreCase(contraseña)) { // si no existe el usuario en la
 																						// BD, no comprueba la clave
+				
 				logger.info("Login correcto");
-				request.getRequestDispatcher("menuPrincipal.html").forward(request, response);
+				
+				String nombreCompleto = usuario.getNombre()+" "+usuario.getApellido1()+" "+usuario.getApellido2();
+				String fechaHoraLogin = LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:SS"));
+
+				//variable de session, accesible en jsp con:
+				HttpSession session = request.getSession(true); 
+				session.setAttribute("nombreUsuario", nombreCompleto); 
+				session.setAttribute("fechaHoraLogin", fechaHoraLogin);
+				//variable de session. accedemos desde JSP con:
+				//	${sessionScope.nombreUsuario} 
+				//	${nombreUsuario}
+				//y desde java: 	session.getAttribute("varSession");
+				
+				request.getRequestDispatcher("menuPrincipal.jsp").forward(request, response);
 			} else {
 				
 				logger.info("Login inválido");

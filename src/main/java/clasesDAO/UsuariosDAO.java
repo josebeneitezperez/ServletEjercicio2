@@ -1,12 +1,15 @@
 package main.java.clasesDAO;
 
 
+import java.util.List;
+
 import org.apache.log4j.LogManager; 
 import org.apache.log4j.Logger;
 import org.hibernate.HibernateException;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 
+import main.java.clasesVO.Roles;
 import main.java.clasesVO.Usuarios;
 import main.java.servlet.Login;
 
@@ -15,6 +18,27 @@ public class UsuariosDAO {
 	private static Logger logger = LogManager.getLogger(UsuariosDAO.class);
 	private static Session sesion = null;
 
+	public static List<Usuarios> getListaUsuarios() {
+		sesion = Login.abrirSesion();
+		Transaction tx = sesion.beginTransaction();
+
+		List<Usuarios> lista = null;
+		String query = "from Usuarios order by id";
+		try {
+			lista = sesion.createQuery(query).list();
+			tx.commit();
+		} catch (Exception e) {
+			logger.error("Error al ejecutar la Query " + query + ", error: ", e);
+		} finally {
+			try {
+				sesion.close();
+			} catch (HibernateException e) {
+				logger.error("No se pudo cerrar la conexión con la BD, error: ", e);
+			}
+		}
+		return lista;
+	}
+	
 	public static Usuarios getUsuario(String nombre) {
 		
 		sesion = Login.abrirSesion();
