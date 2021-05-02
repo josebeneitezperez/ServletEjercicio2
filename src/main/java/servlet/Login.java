@@ -19,6 +19,8 @@ import org.apache.log4j.PropertyConfigurator;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 
+import main.java.clasesDAO.RolesDAO;
+import main.java.clasesVO.Roles;
 import main.java.clasesVO.Usuarios;
 import main.java.controlador.ControladorUsuarios;
 import main.java.controlador.HibernateUtil;
@@ -82,24 +84,14 @@ public class Login extends HttpServlet {
 																						// BD, no comprueba la clave
 				
 				logger.info("Login correcto");
-				
-				String nombreCompleto = usuario.getNombre()+" "+usuario.getApellido1()+" "+usuario.getApellido2();
-				String fechaHoraLogin = LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:SS"));
-
-				//variable de session, accesible en jsp con:
-				HttpSession session = request.getSession(true); 
-				session.setAttribute("nombreUsuario", nombreCompleto); 
-				session.setAttribute("fechaHoraLogin", fechaHoraLogin);
-				//variable de session. accedemos desde JSP con:
-				//	${sessionScope.nombreUsuario} 
-				//	${nombreUsuario}
-				//y desde java: 	session.getAttribute("varSession");
+				crearVariablesSession(request, response, usuario);
 				
 				request.getRequestDispatcher("menuPrincipal.jsp").forward(request, response);
 			} else {
 				
 				logger.info("Login inválido");
 				request.getRequestDispatcher("loginInvalido.html").forward(request, response);
+				System.out.println("b"+request.getRequestURL());
 			}
 
 			/*
@@ -122,6 +114,30 @@ public class Login extends HttpServlet {
 		}
 
 		out.close();
+	}
+	
+	private static void crearVariablesSession(HttpServletRequest request, HttpServletResponse response, Usuarios usuario) {
+		
+		//nombre completo, fecha y hora
+		String nombreCompleto = usuario.getNombre()+" "+usuario.getApellido1()+" "+usuario.getApellido2();
+		String fechaHoraLogin = LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:SS"));
+
+		//variable de session, accesible en jsp con:
+		HttpSession session = request.getSession(true); 
+		session.setAttribute("nombreUsuario", nombreCompleto); 
+		session.setAttribute("fechaHoraLogin", fechaHoraLogin);
+		//variable de session. accedemos desde JSP con:
+		//	${sessionScope.nombreUsuario} 
+		//	${nombreUsuario}
+		//y desde java: 	session.getAttribute("varSession");
+		
+		//rolUsuario
+		Roles rol = RolesDAO.getRolId(usuario.getIdRol());
+		session.setAttribute("rolUsuario", rol.getRol());
+		
+		//URL anterior
+		session.setAttribute("urlAnterior", request.getRequestURL());
+		System.out.println("a"+request.getRequestURL());
 	}
 
 	/**
