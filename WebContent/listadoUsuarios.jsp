@@ -1,5 +1,6 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" 
+	pageEncoding="UTF-8"%>
+<%@ page session="true"%>
 <%@ page import="java.util.*, main.java.clasesDAO.*, main.java.clasesVO.*" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
@@ -7,7 +8,7 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<meta charset="ISO-8859-1">
+		<meta charset="UTF-8">
 		<title>Listado de usuarios</title>
 	</head>
 	<body>
@@ -15,22 +16,21 @@
 		List<Usuarios> listaUsuarios = UsuariosDAO.getListaUsuarios();%>
 		<%pageContext.setAttribute("listaUsuarios", listaUsuarios); %>
 		
-		<h1>Bienvenido, ${sessionScope.nombreUsuario}</h1>
-		<h3>Sesión iniciada el ${sessionScope.fechaHoraLogin}</h3>
+		<%@ include file="cabecera.jsp" %>
 		
 		<form action="" method="post">
 			<table border="2">
 				<tr>
 				    <th>ID usuario</th>
 				    <th>ID rol</th>
-				    <th>Correo electrónico</th>
+				    <th>Correo electrÃ³nico</th>
 				    <!-- <th>Clave</th>	-->
 				    <th>Primer apellido</th>
 				    <th>Segundo apellido</th>
-				    <th>Dirección</th>
+				    <th>DirecciÃ³n</th>
 				    <th>Localidad</th>
 				    <th>Provincia</th>
-				    <th>Teléfono</th>
+				    <th>TelÃ©fono</th>
 				    <th>DNI</th>
 			    </tr>
 			    <c:forEach items="${pageScope.listaUsuarios}" var="usuario" varStatus="status" begin="0" end="${pageScope.listaUsuarios.size() - 1}">

@@ -24,6 +24,7 @@ import main.java.clasesVO.Roles;
 import main.java.clasesVO.Usuarios;
 import main.java.controlador.ControladorUsuarios;
 import main.java.controlador.HibernateUtil;
+import servicios.LogicaLogin;
 
 /**
  * Servlet implementation class Login
@@ -67,78 +68,21 @@ public class Login extends HttpServlet {
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
-		/*
-		 * Map<String, String[]> parameters = request.getParameterMap(); for(String
-		 * parameter : parameters.keySet()) System.out.println(parameter);
-		 */
-
-		PrintWriter out = response.getWriter();
-		String nombre = null;
-		String contraseña = null;
-		if (((nombre = request.getParameter("user")) != null)
-				&& ((contraseña = request.getParameter("password")) != null)) {
+		Usuarios usuario = null;
+		if((usuario =LogicaLogin.comprobarContraseña(request.getParameter("user"),  request.getParameter("password")))!=null) {
 			
-			Usuarios usuario = ControladorUsuarios.getEmpleados(nombre);
+			HttpSession session = request.getSession(true);
+			LogicaLogin.crearVariablesSession(usuario, session, request.getRequestURL());
 			
-			if (usuario != null && usuario.getClave().equalsIgnoreCase(contraseña)) { // si no existe el usuario en la
-																						// BD, no comprueba la clave
-				
-				logger.info("Login correcto");
-				crearVariablesSession(request, response, usuario);
-				
-				request.getRequestDispatcher("menuPrincipal.jsp").forward(request, response);
-			} else {
-				
-				logger.info("Login inválido");
-				request.getRequestDispatcher("loginInvalido.html").forward(request, response);
-				System.out.println("b"+request.getRequestURL());
-			}
-
-			/*
-			 * List<Usuarios>listaUsuarios = ControladorUsuarios.getEmpleados(nombre);
-			 * if(listaUsuarios!=null) { for(Usuarios usuario: listaUsuarios) {
-			 * if(usuario.getClave().equalsIgnoreCase(contraseña)) {
-			 * 
-			 * printResponse(out, "Bienvenido "+nombre);
-			 * 
-			 * }else { printResponse(out,
-			 * "Error, la contraseña es incorrecta para el usuario "+nombre); } } } else {
-			 * System.out.println("listaUsuarios vale null"); printResponse(out,
-			 * "No existe el usuario con el nombre "+nombre+" en la BD"); }
-			 * 
-			 */
-
-		} else {
-			logger.info("Login inválido");
+			System.out.println("rolUsuario vale: "+request.getAttribute("rolUsuario"));
+			
+			String paginaSegunRol = LogicaLogin.getPaginaSegunRol((String)request.getAttribute("rolUsuario"));
+			request.getRequestDispatcher(paginaSegunRol).forward(request, response);
+		}else {
 			request.getRequestDispatcher("loginInvalido.html").forward(request, response);
 		}
-
-		out.close();
 	}
 	
-	private static void crearVariablesSession(HttpServletRequest request, HttpServletResponse response, Usuarios usuario) {
-		
-		//nombre completo, fecha y hora
-		String nombreCompleto = usuario.getNombre()+" "+usuario.getApellido1()+" "+usuario.getApellido2();
-		String fechaHoraLogin = LocalDateTime.now().format(DateTimeFormatter.ofPattern("dd-MM-yyyy HH:mm:SS"));
-
-		//variable de session, accesible en jsp con:
-		HttpSession session = request.getSession(true); 
-		session.setAttribute("nombreUsuario", nombreCompleto); 
-		session.setAttribute("fechaHoraLogin", fechaHoraLogin);
-		//variable de session. accedemos desde JSP con:
-		//	${sessionScope.nombreUsuario} 
-		//	${nombreUsuario}
-		//y desde java: 	session.getAttribute("varSession");
-		
-		//rolUsuario
-		Roles rol = RolesDAO.getRolId(usuario.getIdRol());
-		session.setAttribute("rolUsuario", rol.getRol());
-		
-		//URL anterior
-		session.setAttribute("urlAnterior", request.getRequestURL());
-		System.out.println("a"+request.getRequestURL());
-	}
 
 	/**
 	 * @see HttpServlet#doPost(HttpServletRequest request, HttpServletResponse
