@@ -7,27 +7,27 @@ public class UsuarioService {
 	private static String patron = "noCambiarEstaLinea";
 	static StandardPBEStringEncryptor cifrador = new StandardPBEStringEncryptor();;
 	
-	public static String encriptar(String contraseñaOriginal) {
+	public static String encriptar(String contrasenaOriginal) {
 		
 		cifrador.setPassword(patron);
-		String contraseñaCifrada = cifrador.encrypt(contraseñaOriginal);
+		String contrasenaCifrada = cifrador.encrypt(contrasenaOriginal);
 
-		return contraseñaCifrada;
+		return contrasenaCifrada;
 	}
 	
-	public static String descifrar(String contraseñaCifrada) {
+	public static String descifrar(String contrasenaCifrada) {
 		
 		cifrador.setPassword(patron);
-		String contraseñaOriginal = cifrador.decrypt(contraseñaCifrada);
+		String contrasenaOriginal = cifrador.decrypt(contrasenaCifrada);
 		
-		return contraseñaOriginal;
+		return contrasenaOriginal;
 	}
 	
-	public static boolean comparar(String contraseñaIntroducida, String contraseñaCifradaBD) {
+	public static boolean comparar(String contrasenaIntroducida, String contrasenaCifradaBD) {
 		
-		String contraseñaDescifradaBD = cifrador.decrypt(contraseñaCifradaBD);
+		String contrasenaDescifradaBD = cifrador.decrypt(contrasenaCifradaBD);
 		
-		if(contraseñaDescifradaBD.equals(contraseñaIntroducida)) {
+		if(contrasenaDescifradaBD.equals(contrasenaIntroducida)) {
 			return true;
 		}else {
 			return true;

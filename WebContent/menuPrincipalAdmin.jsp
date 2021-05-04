@@ -7,14 +7,13 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Bienvenido</title>
+<title>Menú</title>
 </head>
 <body>
 	<%@ include file="cabecera.jsp" %>
 	
-	<form action="altaRol.jsp" method="post">
-		<input type="submit" name="altaRol" value="Dar de alta un rol" class="button" />
-	</form>
+	<!-- /jsp/altaRol.jsp -->
+	<a href="<%=request.getContextPath() %>/altaRol.jsp">Dar de alta un rol</a>
 	
 	<form action="altaUsuario.jsp" method="post">
 		<input type="submit" name="altaUsuario" value="Dar de alta un usuario" class="button" />
@@ -29,11 +28,11 @@
 	</form>
 	
 	<!-- -->
-	<form action="altaProductos.jsp" method="post">
+	<form action="altaProducto.jsp" method="post">
 		<input type="submit" name="altaProductos" value="Alta de productos" class="button" />
 	</form>
 	
-	<form action="altaCategorias.jsp" method="post">
+	<form action="altaCategoria.jsp" method="post">
 		<input type="submit" name="altaCategorias" value="Alta de categorías" class="button" />
 	</form>
 	
@@ -45,12 +44,14 @@
 		<input type="submit" name="listadoCategorias" value="Listado de categorías" class="button" />
 	</form>
  	
+ 	<!--
  	<c:choose>
         <c:when test="${sessionScope.rolUsuario == 'Admin'}">
         	<input type="button" disabled="disabled"/>
         </c:when>
         <c:otherwise>undefined</c:otherwise>
     </c:choose>
+ 	-->
  	
 </body>
 </html>
