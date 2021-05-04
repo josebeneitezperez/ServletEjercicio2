@@ -31,11 +31,9 @@ public class ProductosDAO {
 			try {
 				sesion.close();
 			} catch (HibernateException e) {
-				logger.error("No se pudo cerrar la conexión con la BD, error: ", e);
+				logger.error("No se pudo cerrar la conexiï¿½n con la BD, error: ", e);
 			}
 		}
-		
-		System.out.println("ListaProductos tiene "+lista.size()+" productos");
 		
 		return lista;
 	}
@@ -56,7 +54,7 @@ public class ProductosDAO {
 			try {
 				sesion.close();
 			} catch (HibernateException e) {
-				logger.error("No se pudo cerrar la conexión con la BD, error: ", e);
+				logger.error("No se pudo cerrar la conexiï¿½n con la BD, error: ", e);
 			}
 		}
 
@@ -77,13 +75,13 @@ public class ProductosDAO {
 			try {
 				sesion.close();
 			} catch (HibernateException e) {
-				logger.error("No se pudo cerrar la conexión con la BD, error: ", e);
+				logger.error("No se pudo cerrar la conexiï¿½n con la BD, error: ", e);
 			}
 		}
 		return categoria;
 	}
 
-	public static void insert(Productos categoria) {
+	public static boolean insert(Productos categoria) {
 
 		sesion = Login.abrirSesion();
 		Transaction tx = sesion.beginTransaction();
@@ -96,9 +94,11 @@ public class ProductosDAO {
 		} finally {
 			try {
 				sesion.close();
+				return true;
 			} catch (HibernateException e) {
-				logger.error("No se pudo cerrar la conexión con la BD, error: ", e);
+				logger.error("No se pudo cerrar la conexiÃ³n con la BD, error: ", e);
 			}
 		}
+		return false;
 	}
 }

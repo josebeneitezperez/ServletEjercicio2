@@ -12,9 +12,11 @@
 	<h1>Bienvenido, ${session.nombreUsuario} con rol ${sessionScope.rolUsuario}</h1>
 	<h3>Sesión iniciada el ${sessionScope.fechaHoraLogin}</h3>
 	
+
 	<form action="Cabecera" method="post">
 		<input type="submit" name="cerrar" value="Cerrar sesión" class="button" />
 	</form>
+	
 	
 	<!-- 
 	<form action="${sessionScope.urlAnterior}" method="post">
@@ -26,7 +28,7 @@
 	</form>
 	-->
 	
-	<form action="Cabecera" method="post">
+	<form action="javascript:history.back()" method="post">
 		<input type="submit" name="volver" value="Volver" class="button" />
 	</form>
 	 

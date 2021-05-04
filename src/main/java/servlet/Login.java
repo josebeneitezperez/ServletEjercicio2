@@ -47,7 +47,7 @@ public class Login extends HttpServlet{
 	public Login() {
 		super();
 		PropertyConfigurator.configure(rutaLogs);
-		logger.info("Aplicación iniciada");
+		logger.info("Aplicaciï¿½n iniciada");
 	}
 	
 	/**
@@ -72,7 +72,7 @@ public class Login extends HttpServlet{
 			throws ServletException, IOException {
 		
 		Usuarios usuario = null;
-		if((usuario =LogicaLogin.comprobarContraseña(request.getParameter("user"),  request.getParameter("password")))!=null) {
+		if((usuario =LogicaLogin.comprobarContrasena(request.getParameter("user"),  request.getParameter("password")))!=null) {
 			
 			HttpSession session = request.getSession(true);
 			LogicaLogin.crearVariablesSession(usuario, session, request.getRequestURL());	
@@ -93,7 +93,7 @@ public class Login extends HttpServlet{
 	protected void doPost(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
-		logger.info("Recibida petición POST");
+		logger.info("Recibida peticiï¿½n POST");
 		doGet(request, response);
 	}
 }

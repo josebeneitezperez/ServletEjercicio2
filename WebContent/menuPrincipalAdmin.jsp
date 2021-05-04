@@ -7,14 +7,13 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>Bienvenido</title>
+<title>Menú</title>
 </head>
 <body>
 	<%@ include file="cabecera.jsp" %>
 	
-	<form action="altaRol.jsp" method="post">
-		<input type="submit" name="altaRol" value="Dar de alta un rol" class="button" />
-	</form>
+	<!-- /jsp/altaRol.jsp -->
+	<a href="<%=request.getContextPath() %>/altaRol.jsp">Dar de alta un rol</a>
 	
 	<form action="altaUsuario.jsp" method="post">
 		<input type="submit" name="altaUsuario" value="Dar de alta un usuario" class="button" />

@@ -3,6 +3,7 @@ package servicios;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
+import java.util.List;
 
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
@@ -17,6 +18,7 @@ import org.apache.log4j.LogManager;
 import org.apache.log4j.Logger;
 
 import main.java.clasesDAO.RolesDAO;
+import main.java.clasesDAO.UsuariosDAO;
 import main.java.clasesVO.Roles;
 import main.java.clasesVO.Usuarios;
 import main.java.controlador.ControladorUsuarios;
@@ -25,7 +27,7 @@ public class LogicaLogin {
 
 	private static Logger logger = LogManager.getLogger(LogicaLogin.class);
 
-	public static Usuarios comprobarContraseña(String nombre, String contraseñaIntroducida)
+	public static Usuarios comprobarContrasena(String nombre, String contraseÃ±aIntroducida)
 			throws ServletException, IOException {
 
 		/*
@@ -33,33 +35,33 @@ public class LogicaLogin {
 		 * parameter : parameters.keySet()) System.out.println(parameter);
 		 */
 		
-		// Contraseña sin cifrar
+		// ContraseÃ±a sin cifrar
 		Usuarios usuario = null;
-		if ((nombre != null) && (contraseñaIntroducida != null)) {
+		if ((nombre != null) && (contraseÃ±aIntroducida != null)) {
 
 			usuario = ControladorUsuarios.getEmpleados(nombre);
 
-			if (usuario != null && usuario.getClave().equals(contraseñaIntroducida)) { // si no existe el usuario en la
+			if (usuario != null && usuario.getClave().equals(contraseÃ±aIntroducida)) { // si no existe el usuario en la
 																						// BD, no comprueba la clave
 				logger.info("Login correcto");
 				return usuario;
 			}
 		}
 		
-		//solo llegamos aquí si el login fue incorrecto
+		//solo llegamos aquÃ± si el login fue incorrecto
 		logger.info("Login incorrecto");
-		return usuario;	//null si no existe el usuario o falló la conexión con la BD
+		return usuario;	//null si no existe el usuario o fallÃ± la conexiÃ±n con la BD
 
 		
-		// Contraseña cifrada
+		// ContraseÃ±a cifrada
 		/*
 		Usuarios usuario = null;
-		if ((nombre != null) && (contraseñaIntroducida != null)) {
+		if ((nombre != null) && (contraseÃ±aIntroducida != null)) {
 
 			usuario = ControladorUsuarios.getEmpleados(nombre);
 
 			// si no existe el usuario en la BD, no comprueba la clave
-			if (usuario != null && UsuarioService.comparar(contraseñaIntroducida, usuario.getClave())) {
+			if (usuario != null && UsuarioService.comparar(contraseÃ±aIntroducida, usuario.getClave())) {
 			
 				logger.info("Login correcto");
 				return usuario;
@@ -94,9 +96,15 @@ public class LogicaLogin {
 		// rolUsuario
 		Roles rol = RolesDAO.getRolId(usuario.getIdRol());
 		session.setAttribute("rolUsuario", rol.getRol());
-
+		
 		// URL anterior
 		session.setAttribute("urlAnterior", urlAnterior);
+		
+		//
+		List<Usuarios> listaUsuarios = UsuariosDAO.getListaUsuarios();
+		session.setAttribute("listaUsuarios", listaUsuarios);
+		
+		
 	}
 	
 	public static String getPaginaSegunRol(String rolUsuario) {

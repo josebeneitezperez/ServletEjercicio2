@@ -11,26 +11,23 @@
 	</head>
 	
 	<body>
-		<form name="formularioRol" action="AltaRol" method="post">
+		<form name="formularioRol" action="AltaProducto" method="post">
 			<fieldset>
 			  <legend>Dar de alta un producto</legend>
 
-				<label for="id">ID del producto</label>
-			  <input name="id" type="text" />
-			  
-			  <label for="categoria">Categoría del producto</label>
+			  <label for="categoria">Categoría</label>
 			  <input name="categoria" type="text" />
 			  
 			  <label for="nombre">Nombre del producto</label>
 			  <input name="nombre" type="text" />
 			  
-			  <label for="descripcion">Descripción del producto</label>
+			  <label for="descripcion">Descripción</label>
 			  <input name="descripcion" type="text" />
 			  
-			  <label for="precio">Precio del producto</label>
+			  <label for="precio">Precio</label>
 			  <input name="precio" type="text" />
 			  
-			  <label for="stock">Stock del producto</label>
+			  <label for="stock">Stock</label>
 			  <input name="stock" type="text" />
 			  
 			  <label for="fechaAlta">Fecha de alta</label>

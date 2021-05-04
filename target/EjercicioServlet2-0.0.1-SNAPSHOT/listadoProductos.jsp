@@ -12,7 +12,7 @@
 		<title>Listado de roles</title>
 	</head>
 	<body>
-		<%!	//declaraciones java
+		<%!//declaraciones java
 		List<Productos> listaProductos = ProductosDAO.getListaProductos();%>
 		<%pageContext.setAttribute("listaProductos", listaProductos); %>
 		

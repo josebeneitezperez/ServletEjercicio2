@@ -40,6 +40,7 @@
 			  <input name="impuesto" type="text" />
 
 			  <input type="submit" class="boton" value="Dar de alta" />
+			  
 			</fieldset>
 		</form>
 	<body>
