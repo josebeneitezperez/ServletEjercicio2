@@ -4,7 +4,13 @@ import java.io.IOException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
+import javax.servlet.Filter;
+import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.LogManager;
@@ -99,6 +105,7 @@ public class LogicaLogin {
 		switch (rolUsuario) {
 
 			case "Admin": {
+				System.out.println("a");
 				paginaWeb = "menuPrincipalAdmin.jsp";
 				break;
 			}
@@ -113,8 +120,6 @@ public class LogicaLogin {
 		}
 		return paginaWeb;
 	}
-	
-	
 }
 
 

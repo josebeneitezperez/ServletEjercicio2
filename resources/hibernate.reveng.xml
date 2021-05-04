@@ -7,4 +7,6 @@
 
 	<table-filter match-name="roles" match-catalog="tienda_online"></table-filter>
 	<table-filter match-name="usuarios" match-catalog="tienda_online"></table-filter>
+	<table-filter match-name="categorias" match-catalog="tienda_online"></table-filter>
+	<table-filter match-name="productos" match-catalog="tienda_online"></table-filter>
 </hibernate-reverse-engineering>

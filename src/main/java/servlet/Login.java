@@ -1,12 +1,14 @@
 package main.java.servlet;
 
-import java.io.IOException; 
+import java.io.IOException;  
 import java.io.PrintWriter;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletException;
+import javax.servlet.ServletRequest;
+import javax.servlet.ServletResponse;
 import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
@@ -30,7 +32,8 @@ import servicios.LogicaLogin;
  * Servlet implementation class Login
  */
 @WebServlet("/Login")
-public class Login extends HttpServlet {
+public class Login extends HttpServlet{
+
 	private static final long serialVersionUID = 1L;
 
 	private static Logger logger = LogManager.getLogger(Login.class);
@@ -46,7 +49,7 @@ public class Login extends HttpServlet {
 		PropertyConfigurator.configure(rutaLogs);
 		logger.info("Aplicación iniciada");
 	}
-
+	
 	/**
 	 * @see Servlet#init(ServletConfig)
 	 */
@@ -67,17 +70,16 @@ public class Login extends HttpServlet {
 	 */
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-
+		
 		Usuarios usuario = null;
 		if((usuario =LogicaLogin.comprobarContraseña(request.getParameter("user"),  request.getParameter("password")))!=null) {
 			
 			HttpSession session = request.getSession(true);
-			LogicaLogin.crearVariablesSession(usuario, session, request.getRequestURL());
+			LogicaLogin.crearVariablesSession(usuario, session, request.getRequestURL());	
 			
-			System.out.println("rolUsuario vale: "+request.getAttribute("rolUsuario"));
-			
-			String paginaSegunRol = LogicaLogin.getPaginaSegunRol((String)request.getAttribute("rolUsuario"));
+			String paginaSegunRol = LogicaLogin.getPaginaSegunRol((String)session.getAttribute("rolUsuario"));
 			request.getRequestDispatcher(paginaSegunRol).forward(request, response);
+			
 		}else {
 			request.getRequestDispatcher("loginInvalido.html").forward(request, response);
 		}

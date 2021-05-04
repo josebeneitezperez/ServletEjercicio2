@@ -1,14 +1,14 @@
-<%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-	pageEncoding="ISO-8859-1"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" 
+	pageEncoding="UTF-8"%>
+<%@ page session="true"%>
 <!DOCTYPE html>
 <html>
 <head>
-<meta charset="ISO-8859-1">
+<meta charset="UTF-8">
 <title>Alta rol</title>
 </head>
 <body>
-	<h1>Bienvenido, ${sessionScope.nombreUsuario}</h1>
-	<h3>Sesión iniciada el ${sessionScope.fechaHoraLogin}</h3>
+	<%@ include file="cabecera.jsp" %>
 	<%@ include file="altaRol.html" %>
 	
 </body>

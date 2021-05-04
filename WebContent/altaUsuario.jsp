@@ -2,7 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ page session="true"%>
 <!DOCTYPE html>
-<html>
+<html lang="es">
 <head>
 <meta charset="UTF-8">
 <title>Alta usuario</title>
